@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Layout } from "../components/Layout";
+import { ChevronDownIcon, ChevronUpIcon, Icon } from "@chakra-ui/icons";
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -42,6 +43,8 @@ const Index = () => {
         <Stack spacing={8}>
           {data!.posts.posts.map((p) => (
             <Box key={p.id} p={5} shadow="md" borderWidth="1px">
+              <ChevronDownIcon/>
+              <ChevronUpIcon />
               <Heading fontSize="xl">{p.title}</Heading>
               <Text fontSize="l">posted by {p.creator.username}</Text>
               <Text>{p.textSnippet}</Text>

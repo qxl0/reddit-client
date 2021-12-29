@@ -43,6 +43,7 @@ const Index = () => {
           {data!.posts.posts.map((p) => (
             <Box key={p.id} p={5} shadow="md" borderWidth="1px">
               <Heading fontSize="xl">{p.title}</Heading>
+              <Text fontSize="l">posted by {p.creator.username}</Text>
               <Text>{p.textSnippet}</Text>
             </Box>
           ))}

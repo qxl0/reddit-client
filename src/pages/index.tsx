@@ -2,17 +2,27 @@ import { withUrqlClient } from "next-urql";
 import { usePostsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import NextLink from "next/link";
-import { Box, Button, Flex, Heading, Link, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Link,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { Layout } from "../components/Layout";
 
-const Index = () => { 
-  const [variables, setVariables] = useState({limit: 33, cursor: null as null | string});
+const Index = () => {
+  const [variables, setVariables] = useState({
+    limit: 10,
+    cursor: null as null | string,
+  });
   const [{ data, fetching }] = usePostsQuery({
     variables,
   });
 
-  console.log("data is", data);
   if (!fetching && !data) {
     return <div>you got query failed for some reason</div>;
   }
@@ -25,7 +35,7 @@ const Index = () => {
           <Link ml="auto">create post</Link>
         </NextLink>
       </Flex>
-      <br/>
+      <br />
       {!data && fetching ? (
         <div>loading...</div>
       ) : (
@@ -40,21 +50,23 @@ const Index = () => {
       )}
       {data && data.posts.hasMore ? (
         <Flex>
-          <Button onClick={()=>
-            setVariables({
-              limit: variables.limit, 
-              cursor: data.posts.posts[data.posts.posts.length - 1].createdAt
-            })
-          }
-          isLoading={fetching}
-          m="auto"
-          my={8}
-          >load more </Button>
-          </Flex>
-      ): null
-    }
+          <Button
+            onClick={() =>
+              setVariables({
+                limit: variables.limit,
+                cursor: data.posts.posts[data.posts.posts.length - 1].createdAt,
+              })
+            }
+            isLoading={fetching}
+            m="auto"
+            my={8}
+          >
+            load more{" "}
+          </Button>
+        </Flex>
+      ) : null}
     </Layout>
-  )
- }
+  );
+};
 
-export default withUrqlClient(createUrqlClient, {ssr: false})(Index)
+export default withUrqlClient(createUrqlClient, { ssr: true })(Index);
